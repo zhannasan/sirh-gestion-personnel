@@ -57,7 +57,7 @@ public class EditerCollaborateurController extends HttpServlet{
 			}
 			resp.getWriter().write("</ul>");
 		}else{
-			resp.getWriter().write("<ul>");
+			resp.getWriter().write("Creation d'un collaborateur avec les informations suivantes :<ul>");
 			for(Map.Entry<String,String> entry : params.entrySet()){	
 				resp.setStatus(201);
 				resp.getWriter().write("<li>"+entry.getKey()+" : "+entry.getValue()+"</li>");
