@@ -34,11 +34,13 @@ public class EditerCollaborateurController extends HttpServlet{
 		String titre = req.getParameter("titre");
 		String nom = req.getParameter("nom");
 		String prenom = req.getParameter("prenom");
+		
 		Map<String, String> params = new HashMap<>();
 		params.put("matricule", matricule);
 		params.put("titre",titre);
 		params.put("nom",nom);
 		params.put("prenom",prenom);
+		
 		List<String> nullParams = new ArrayList<>();
 		resp.setContentType("text/html");
 		for(Map.Entry<String,String> entry : params.entrySet()){
@@ -56,12 +58,11 @@ public class EditerCollaborateurController extends HttpServlet{
 			resp.getWriter().write("</ul>");
 		}else{
 			resp.getWriter().write("<ul>");
-		for(Map.Entry<String,String> entry : params.entrySet()){	
-			resp.setStatus(201);
-			
-			resp.getWriter().write("<li>"+entry.getKey()+" : "+entry.getValue()+"</li>");
+			for(Map.Entry<String,String> entry : params.entrySet()){	
+				resp.setStatus(201);
+				resp.getWriter().write("<li>"+entry.getKey()+" : "+entry.getValue()+"</li>");
 			}
-		resp.getWriter().write("</ul>");
+			resp.getWriter().write("</ul>");
 		}
 	}	
 }
