@@ -1,0 +1,31 @@
+.container {
+  display: flex;
+  justify-content: space-between;
+}
+.input{
+	width: 100%;
+}
+.card-text{
+	list-style-type: none;
+}
+.img-fluid{
+	padding: 4px;
+}
+.btn {
+	background-color: #103c54;
+	border: none;
+	color: #ffffff;
+	text-decoration: none;
+	text-decoration-line: none;
+}
+.textarea, #formCtrlAddresse{
+	resize: none;
+}
+#accordeonBtn :active, :hover, :focus {
+	text-decoration: none;
+	text-decoration-line: none;
+}
+.card-text.pl-2{
+	list-style: none;
+	color: #103c54;
+}
