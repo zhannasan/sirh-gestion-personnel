@@ -2,14 +2,10 @@ package dev.sgp.web;
 
 import java.io.IOException;
 import java.time.LocalDate;
-import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.ResourceBundle;
 import java.util.Map.Entry;
 
 import javax.servlet.ServletException;
@@ -21,7 +17,6 @@ import dev.sgp.entite.Collaborateur;
 import dev.sgp.service.CollaborateurService;
 import dev.sgp.service.DepartementService;
 import dev.sgp.util.Constantes;
-import dev.sgp.util.DateFormatMatcher;
 
 public class EditerCollaborateurController extends HttpServlet{
 	private CollaborateurService collabService = Constantes.COLLAB_SERVICE;
@@ -56,11 +51,16 @@ public class EditerCollaborateurController extends HttpServlet{
 		}
 		
 		String intitulePoste ="",departement ="",banque ="", bic ="", iban="", telephone="";
-		LocalDate dateNaissance = LocalDate.now();
+		boolean actif=false;
 		if(nullParams.isEmpty()){
 			resp.setStatus(201);
 			for (Entry<String, String> entry : params.entrySet()) {
-				if(entry.getKey().equals("intitulePoste")){
+				if(entry.getKey().equals("actif")){
+					String check = entry.getValue();
+					if (check.equals("checked")){
+						actif=true;
+					}
+				}else if(entry.getKey().equals("intitulePoste")){
 					intitulePoste = entry.getValue();
 				}else if(entry.getKey().equals("departement")){
 					departement = entry.getValue();
@@ -78,16 +78,13 @@ public class EditerCollaborateurController extends HttpServlet{
 		}
 		resp.setStatus(201);
 		Collaborateur collab = collabService.rechercherCollaborateur((String)req.getSession().getAttribute("matricule")).get();
-		
+		collab.setActif(actif);
 		collab.setIntitulePoste(intitulePoste);
 		collab.setDepartement(departement);
 		collab.setBanque(banque);
 		collab.setBic(bic);
 		collab.setIban(iban);
 		collab.setTelephone(telephone);
-		
-		System.out.println(intitulePoste+" "+departement+" "+banque+" "+bic+" "+iban);
-		//collabService.sauvegarderCollaborateur(collab);
 		//req.setAttribute("departement", departement);
 
 		resp.sendRedirect("/sgp/collaborateurs/lister");

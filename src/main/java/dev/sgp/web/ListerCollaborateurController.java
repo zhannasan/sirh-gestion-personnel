@@ -1,11 +1,6 @@
 package dev.sgp.web;
 
 import java.io.IOException;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
-import java.util.Arrays;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -23,7 +18,7 @@ public class ListerCollaborateurController extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		List<Collaborateur> collaborateurs = collabService.listerCollaborateurs();
-		req.setAttribute("listeC", collaborateurs);
+		req.getSession().setAttribute("listeC", collaborateurs);
 
 		this.getServletContext().getRequestDispatcher("/WEB-INF/views/collab/listerCollaborateurs.jsp").forward(req,
 				resp);
@@ -35,12 +30,9 @@ public class ListerCollaborateurController extends HttpServlet {
 		String rechNomPrenom = req.getParameter("nomPrenom");
 		String rechDept = req.getParameter("rechDept");
 		List<Collaborateur> collabsTrouve = collabService.rechercherCollaborateurs(rechNomPrenom, rechDept);
-		for(Collaborateur c: collabsTrouve){
-			System.out.println(c.toString());
-		}
-		req.setAttribute("listeC", collabsTrouve);
-
-		resp.sendRedirect("/sgp/collaborateurs/lister");
+		req.getSession().setAttribute("listeT", collabsTrouve);
+		
+		resp.sendRedirect("/sgp/collaborateurs/chercher");
 	}
 
 }

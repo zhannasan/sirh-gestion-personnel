@@ -22,7 +22,7 @@
 			<div class="collapse navbar-collapse" id="navbarSupportedContent">
 				<ul class="navbar-nav mr-auto">
 					<li class="nav-item active">
-						<a class="nav-link" href="#">Collaborateurs <span class="sr-only">(current)</span></a>
+						<a class="nav-link" href="<%=request.getContextPath()%>/collaborateurs/lister">Collaborateurs <span class="sr-only">(current)</span></a>
 					</li>
 					<li class="nav-item">
 						<a class="nav-link" href="stats.html">Statistiques</a>
@@ -49,7 +49,7 @@
 				<h1>Les Collaborateurs</h1>
 			</div>
 		</div>
-		<form name="searchCollab" action="<%=request.getContextPath()%>/collaborateurs/lister" method="post">
+		<form name="searchCollab" action="<%=request.getContextPath()%>/collaborateurs/chercher" method="post">
 			<div class="form-group row mt-2">
 					<div class="col-12 col-xl-4 col-lg-4 col-md-4 col-sm-4 col-xs-12 text-right">
 						<label class="control-label" for="search1">Rechercher un nom ou un prénom qui commence par :</label>
@@ -88,8 +88,8 @@
 		</form>
 
 		<div class="row">
-		<%List<Collaborateur> collaborateurs = (List<Collaborateur>) request.getSession().getAttribute("listeC");
-				for (Collaborateur c : collaborateurs) {%>
+		<%List<Collaborateur> collaborateurs = (List<Collaborateur>) request.getSession().getAttribute("listeT");%>
+		<% for (Collaborateur c : collaborateurs) {%>
 			<div class="col-12 col-lg-4 col-md-6 col-sm-8 col-xs-12">
 				<div class="card mb-2">
 					<h5 class="card-header"><%=c.getNom().toUpperCase()%> <%=c.getPrenom()%></h5>

@@ -26,6 +26,14 @@
 		<servlet-name>CreerCollaborateurController</servlet-name>
 		<url-pattern>/collaborateurs/creer</url-pattern>
 	</servlet-mapping>
+		<servlet>
+		<servlet-name>RechercherCollaborateurController</servlet-name>
+		<servlet-class>dev.sgp.web.RechercherCollaborateurController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>RechercherCollaborateurController</servlet-name>
+		<url-pattern>/collaborateurs/chercher</url-pattern>
+	</servlet-mapping>
 </web-app>
 
 

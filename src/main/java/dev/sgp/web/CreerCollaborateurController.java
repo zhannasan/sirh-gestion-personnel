@@ -1,15 +1,10 @@
 package dev.sgp.web;
 
-import static org.junit.Assert.assertThat;
-
 import java.io.IOException;
 import java.time.LocalDate;
-import java.time.Period;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,7 +12,6 @@ import java.util.Map.Entry;
 import java.util.ResourceBundle;
 
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -25,7 +19,6 @@ import javax.servlet.http.HttpServletResponse;
 import dev.sgp.entite.Collaborateur;
 import dev.sgp.service.CollaborateurService;
 import dev.sgp.util.Constantes;
-import dev.sgp.util.DateFormatMatcher;
 import dev.sgp.util.Matricule;
 
 public class CreerCollaborateurController extends HttpServlet {
@@ -110,6 +103,7 @@ public class CreerCollaborateurController extends HttpServlet {
 		// add to list
 		req.getSession().setAttribute("matricule", matricule);
 		collabService.sauvegarderCollaborateur(collab);
+
 		resp.sendRedirect("/sgp/collaborateurs/lister");
 
 	}

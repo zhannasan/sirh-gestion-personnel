@@ -19,14 +19,24 @@ public class RechercherCollaborateurController extends HttpServlet {
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-		this.getServletContext().getRequestDispatcher("/WEB-INF/views/collab/listerCollaborateur.jsp").forward(req, resp);
+		List<Collaborateur> collaborateurs = collabService.listerCollaborateurs();
+		req.setAttribute("listeT", collaborateurs);
+		
+		this.getServletContext().getRequestDispatcher("/WEB-INF/views/collab/rechercherCollaborateurs.jsp").forward(req, resp);
 }
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {	
 		resp.setContentType("text/html");
+		String rechNomPrenom = req.getParameter("nomPrenom");
+		String rechDept = req.getParameter("rechDept");
+		List<Collaborateur> collabsTrouve = collabService.rechercherCollaborateurs(rechNomPrenom, rechDept);
+		for(Collaborateur c: collabsTrouve){
+			System.out.println(c.toString());
+		}
+		req.setAttribute("listeT", collabsTrouve);
 		
+		resp.sendRedirect("/sgp/collaborateurs/chercher");
 	
 	}
 	

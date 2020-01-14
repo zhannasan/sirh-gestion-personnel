@@ -34,10 +34,10 @@ public class CollaborateurService {
 		Predicate<Collaborateur> deptContient = c -> c.getDepartement().equals(dept);
 		if(dept.equals("Tous")){
 			collaborateurs=	listeCollaborateurs.stream()
-					.filter(nomContient.and(prenomContient)).collect(Collectors.toList());
+					.filter(nomContient.or(prenomContient)).collect(Collectors.toList());
 		}else{
 			collaborateurs=	listeCollaborateurs.stream()
-				.filter(nomContient.and(prenomContient).and(deptContient)).collect(Collectors.toList());}
+				.filter(nomContient.or(prenomContient).or(deptContient)).collect(Collectors.toList());}
 		return collaborateurs;
 	}
 }

@@ -30,7 +30,7 @@
 
 			<div class="collapse navbar-collapse" id="navbarSupportedContent">
 				<ul class="navbar-nav mr-auto">
-					<li class="nav-item"><a class="nav-link" href="index.html">Collaborateurs
+					<li class="nav-item"><a class="nav-link" href="<%=request.getContextPath()%>/collaborateurs/lister">Collaborateurs
 							<span class="sr-only">(current)</span>
 					</a></li>
 					<li class="nav-item"><a class="nav-link" href="stats.html">Statistiques</a>
@@ -51,9 +51,9 @@
 				<div class="col align-self-start mr-3">
 					<div class="text-right">
 						<div class="custom-control custom-checkbox">
-							<input type="checkbox" class="custom-control-input"
-								id="defaultUnchecked"> <label
-								class="custom-control-label" for="defaultUnchecked">Désactiver</label>
+							<input type="checkbox" class="custom-control-input" name="actif"
+								id="defaultUnchecked"> 
+							<label class="custom-control-label" for="defaultUnchecked">Désactiver</label>
 						</div>
 					</div>
 				</div>
@@ -128,7 +128,7 @@
 										</div>
 										<div class="col-5">
 											<textarea type="text" class="form-control" name="adresse"
-												id="formCtrlAddresse" maxlength="400" value="<%=c.getAdresse()%>"></textarea>
+												id="formCtrlAddresse" maxlength="400"><%=c.getAdresse()%></textarea>
 										</div>
 									</div>
 									<div class="row mt-3">
@@ -223,7 +223,7 @@
 										</div>
 										<div class="col-5">
 											<input type="text" class="form-control" name="iban"
-												id="formCtrlIban" value="<%=c.getIban()%>">
+												id="formCtrlIban" value="<%=c.getIban()%>" pattern="[A-Za-z0-9]{14-34}">
 										</div>
 									</div>
 									<div class="row mt-3">
@@ -232,7 +232,7 @@
 										</div>
 										<div class="col-5">
 											<input type="text" class="form-control" name="bic"
-												id="formCtrlBic" value="<%=c.getBic()%>">
+												id="formCtrlBic" value="<%=c.getBic()%>" pattern="[A-Za-z0-9]{8-11}">
 										</div>
 									</div>
 								</div>
