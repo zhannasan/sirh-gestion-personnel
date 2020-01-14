@@ -2,6 +2,7 @@ package dev.sgp.util;
 
 import java.text.ParseException;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -16,12 +17,9 @@ public class DateFormatMatcher {
 		Matcher m = PATTERN.matcher(text);
 		LocalDate date = LocalDate.now();
 		try{
-			int dd = Integer.parseInt(m.group(1));
+			int yy = Integer.parseInt(m.group(1));
 			int mm = Integer.parseInt(m.group(2));
-			int yy = Integer.parseInt(m.group(3));
-
-			date = LocalDate.of(yy, mm, dd);
-			System.out.println(date);
+			int dd = Integer.parseInt(m.group(3));
 		} catch(RuntimeException e){
 			LOG.error(e.getMessage(), e);
 		}

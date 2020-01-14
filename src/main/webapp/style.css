@@ -18,14 +18,12 @@
 	text-decoration: none;
 	text-decoration-line: none;
 }
-.textarea, #formCtrlAddresse{
-	resize: none;
-}
-#accordeonBtn :active, :hover, :focus {
+#accordeonBtn:active, :hover, :focus {
 	text-decoration: none;
-	text-decoration-line: none;
+	background-color: transparent;
 }
-.card-text.pl-2{
-	list-style: none;
+#accordeonBtn{
+	text-decoration: none;
+	background-color: transparent;
 	color: #103c54;
 }

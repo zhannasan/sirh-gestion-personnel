@@ -13,7 +13,7 @@
 <body>
 	<header>
 		<nav class="navbar navbar-expand-lg navbar-light bg-light">
-			<a class="navbar-brand" href="#"><img src="LogoFish.svg" height="40" width="40"></a>
+			<a class="navbar-brand" href="#"><img src="<%=request.getContextPath()%>/LogoFish.svg" height="40" width="40"></a>
 			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 				<span class="navbar-toggler-icon"></span>
 			</button>
@@ -37,7 +37,7 @@
 	<div class="row mt-3">
 		<div class="col align-self-start mr-3">
 			<div class="text-right">
-				<button class="btn btn-primary" id="btnAdd"><a href="creer.html">Ajouter un nouveau collaborateur</a></button>
+				<button class="btn btn-primary" id="btnAdd"><a href="<%=request.getContextPath()%>/collaborateurs/creer">Ajouter un nouveau collaborateur</a></button>
 			</div>
 		</div>
 	</div>
@@ -48,13 +48,13 @@
 				<h1>Les Collaborateurs</h1>
 			</div>
 		</div>
-		<form name="searchCollab" action="/search" method="get">
+		<form name="searchCollab" action="<%=request.getContextPath()%>/collaborateurs/lister" method="get">
 			<div class="form-group row mt-2">
 					<div class="col-12 col-xl-4 col-lg-4 col-md-4 col-sm-4 col-xs-12 text-right">
 						<label class="control-label" for="search1">Rechercher un nom ou un prénom qui commence par :</label>
 					</div>
 					<div class="col-12 col-xl-3 col-lg-3 col-md-4 col-sm-4 col-xs-12 mb-2">
-						<input class="form-control" type="search" placeholder="Rechercher" aria-label="Rechercher" id="search1">
+						<input class="form-control" type="search" placeholder="Rechercher" aria-label="Rechercher" name="nomPrenom" id="search1">
 					</div>
 					<div class="col-12 col-xl-1 col-lg-1 col-md-2 col-sm-2 col-xs-12 mb-2">
 						<button class="btn btn-primary" type="submit">Rechercher</button>
@@ -75,7 +75,7 @@
 				</div>
 				<div class="col-12 col-xl-3 col-lg-3 col-md-3 col-sm-4 col-xs-12">
 					<div class="form-select">
-						<select class="form-control" id="controlSelect1">
+						<select class="form-control" id="controlSelect1" name="rechDept">
 							<option>Tous</option>
 							<option>Comptabilité</option>
 							<option>Ressources Humaines</option>
@@ -91,19 +91,18 @@
 										for (Collaborateur c : collaborateurs) {%>
 			<div class="col-12 col-lg-4 col-md-6 col-sm-8 col-xs-12">
 				<div class="card mb-2">
-					<h5 class="card-header">NOM Prénom</h5>
+					<h5 class="card-header"><%=c.getNom().toUpperCase()%> <%=c.getPrenom()%></h5>
 					<div class="card-body">
 						<div class="row no-gutters">
 							<div class="media">
-								<img class="align-self-center" src="Profile.svg" alt="Profile picture" height="100" width="100">
+								<img class="align-self-center" src="<%=request.getContextPath()%>/Profile.svg" alt="Profile picture" height="100" width="100">
 							</div>
 							<div class="media-body">
 								<ul class="card-text pl-2">
-									
-										<li>Fonction :<%= c.getNom()%> </li>
-										<li>Département : <%= c.getPrenom()%></li>
-										<li>Email :<%= c.getEmail()%></li>
-										<li>Téléphone :<%= c.getNumeroSecu()%></li>
+										<li>Fonction : <%= c.getIntitulePoste()%></li>
+										<li>Département : <%= c.getDepartement()%></li>
+										<li>Email : <%= c.getEmail()%></li>
+										<li>Téléphone : <%= c.getTelephone()%></li>
 										
 									</ul>
 							</div>

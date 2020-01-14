@@ -21,6 +21,7 @@ public class Collaborateur {
 	private String banque;
 	private String bic;
 	private String iban;
+	private String telephone;
 	/**
 	 * 
 	 */
@@ -224,6 +225,20 @@ public class Collaborateur {
 	 */
 	public void setIban(String iban) {
 		this.iban = iban;
+	}
+	
+	
+	/**
+	 * @return the telephone
+	 */
+	public String getTelephone() {
+		return telephone;
+	}
+	/**
+	 * @param telephone the telephone to set
+	 */
+	public void setTelephone(String telephone) {
+		this.telephone = telephone;
 	}
 	@Override
 	public String toString(){

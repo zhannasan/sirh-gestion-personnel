@@ -51,7 +51,7 @@
 			</div>
 			<div class="col-5">
 				<input type="text" class="form-control" name="nom" id="formCtrlNom" required>
-				<%if (request.getAttribute("nom").equals("")){ %>
+				<%if ((boolean)request.getAttribute("nomError")==true){ %>
 				<span class="error"><small class="form-text text-danger">Le nom est obligatoire</small></span>
 				<%}%>
 			</div>
@@ -62,9 +62,7 @@
 			</div>
 			<div class="col-5">
 				<input type="text" class="form-control" name="prenom" id="formCtrlPrenom" required>
-				<%if (request.getAttribute("nom").equals("")){ %>
-				<span class="error"><small class="form-text text-danger">Le  prénom est obligatoire <%=request.getAttribute("nom") %></small></span>
-				<%}%>
+
 			</div>
 		</div>
 		<div class ="row mt-3">
@@ -73,9 +71,7 @@
 			</div>
 			<div class="col-5">
 				<input type="date" class="form-control" name="dateNaissance" id="formCtrlDate" required>
-				<%if (request.getAttribute("nom").equals("")){ %>
-				<span class="error"><small class="form-text text-danger">La date de naissance est obligatoire</small></span>
-				<%}%>
+	
 			</div>
 		</div>
 		<div class ="row mt-3">
@@ -84,9 +80,7 @@
 			</div>
 			<div class="col-5">
 				<textarea type="text" class="form-control" name="adresse" id="formCtrlAdresse" maxlength="400" required></textarea>
-				<%if (request.getAttribute("nom").equals("")){ %>
-				<span class="error"><small class="form-text text-danger">L'adresse est obligatoire</small></span>
-				<%}%>
+	
 			</div>
 		</div>
 		<div class ="row mt-3">
@@ -95,9 +89,7 @@
 			</div>
 			<div class="col-5">
 				<input type="text" class="form-control" name="numeroSecu" id="formCtrlNSS" required pattern="[0-9]{15}">
-				<%if (request.getAttribute("nom").equals("")){ %>
-				<span class="error"><small class="form-text text-danger">Le numéro de sécurité sociale est obligatoire</small></span>
-				<%}%>
+				
 			</div>
 		</div>
 		<div class="row mt-3">

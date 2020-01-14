@@ -19,14 +19,28 @@ import dev.sgp.util.Constantes;
 
 public class ListerCollaborateurController extends HttpServlet {
 	private CollaborateurService collabService = Constantes.COLLAB_SERVICE;
-	
+
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		List<Collaborateur> collaborateurs = collabService.listerCollaborateurs();
-		//afficher
 		req.setAttribute("listeC", collaborateurs);
-		
-		this.getServletContext().getRequestDispatcher("/WEB-INF/views/collab/listerCollaborateurs.jsp").forward(req, resp);
+
+		this.getServletContext().getRequestDispatcher("/WEB-INF/views/collab/listerCollaborateurs.jsp").forward(req,
+				resp);
 	}
-	
+
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		resp.setContentType("text/html");
+		String rechNomPrenom = req.getParameter("nomPrenom");
+		String rechDept = req.getParameter("rechDept");
+		List<Collaborateur> collabsTrouve = collabService.rechercherCollaborateurs(rechNomPrenom, rechDept);
+		for(Collaborateur c: collabsTrouve){
+			System.out.println(c.toString());
+		}
+		req.setAttribute("listeC", collabsTrouve);
+
+		resp.sendRedirect("/sgp/collaborateurs/lister");
+	}
+
 }
