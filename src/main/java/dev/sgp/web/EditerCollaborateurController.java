@@ -1,19 +1,16 @@
 package dev.sgp.web;
 
 import java.io.IOException;
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import dev.sgp.entite.Collaborateur;
+import dev.sgp.entite.Departement;
 import dev.sgp.service.CollaborateurService;
 import dev.sgp.service.DepartementService;
 import dev.sgp.util.Constantes;
@@ -24,11 +21,12 @@ public class EditerCollaborateurController extends HttpServlet{
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-		Collaborateur editCollab = collabService.rechercherCollaborateur((String)req.getSession().getAttribute("matricule")).get();
+		String matricule=req.getParameter("matricule");
+		Collaborateur editCollab = collabService.rechercherCollaborateur(matricule);
 		req.setAttribute("editCollab", editCollab);
-		req.setAttribute("listeDept", deptService.listerDepartement());
-		
+		req.setAttribute("matricule", matricule);
+		List<Departement> departements = deptService.listerDepartement();
+		req.setAttribute("listeD", departements);
 		this.getServletContext().getRequestDispatcher("/WEB-INF/views/collab/editerCollaborateur.jsp").forward(req, resp);
 			
 }
@@ -36,56 +34,34 @@ public class EditerCollaborateurController extends HttpServlet{
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {	
 		resp.setContentType("text/html");
-				
-		Map<String, String> params = new HashMap<>();
-		List<String> nullParams = new ArrayList<>();
-		for (Entry<String, String[]> entry : req.getParameterMap().entrySet()) {
-			String key = entry.getKey();
-		    String value = entry.getValue()[0];
-			if(value==null || value.trim().equals("")){
-				resp.setStatus(400);
-				req.setAttribute(key+"Error", true);
-				nullParams.add(key);
-			}
-		    params.put(key, value);
+		String matricule = (String) req.getAttribute("matricule");
+		if(matricule==null){
+			matricule=(String)req.getAttribute("matricule");
 		}
+		System.out.println(matricule);
+		boolean actif = false;
+		if (req.getParameter("actif").equals("on") && req.getParameter("actif")!=null){
+			actif=true;
+		}else{
+			actif=false;
+		}
+		String telephone=req.getParameter("telephone");
+		String departement = req.getParameter("departement");
+		String intitulePoste = req.getParameter("intitulePoste");
 		
-		String intitulePoste ="",departement ="",banque ="", bic ="", iban="", telephone="";
-		boolean actif=false;
-		if(nullParams.isEmpty()){
-			resp.setStatus(201);
-			for (Entry<String, String> entry : params.entrySet()) {
-				if(entry.getKey().equals("actif")){
-					String check = entry.getValue();
-					if (check.equals("checked")){
-						actif=true;
-					}
-				}else if(entry.getKey().equals("intitulePoste")){
-					intitulePoste = entry.getValue();
-				}else if(entry.getKey().equals("departement")){
-					departement = entry.getValue();
-				}else if(entry.getKey().equals("banque")){
-					banque = entry.getValue();
-				}else if(entry.getKey().equals("bic")){
-					bic = entry.getValue();
-				}else if(entry.getKey().equals("iban")){
-					iban = entry.getValue();
-				}else if(entry.getKey().equals("telephone")){
-					telephone = entry.getValue();
-				}
-				
-			}
-		}
-		resp.setStatus(201);
-		Collaborateur collab = collabService.rechercherCollaborateur((String)req.getSession().getAttribute("matricule")).get();
+		String banque = req.getParameter("banque");
+		String iban = req.getParameter("iban");
+		String bic = req.getParameter("bic");
+		Collaborateur collab = collabService.rechercherCollaborateur(req.getParameter("matricule"));
+		System.out.println(collab.toString());
 		collab.setActif(actif);
-		collab.setIntitulePoste(intitulePoste);
-		collab.setDepartement(departement);
-		collab.setBanque(banque);
-		collab.setBic(bic);
-		collab.setIban(iban);
+	
 		collab.setTelephone(telephone);
-		//req.setAttribute("departement", departement);
+		collab.setDepartement(departement);
+		collab.setIntitulePoste(intitulePoste);
+		collab.setBanque(banque);
+		collab.setIban(iban);
+		collab.setBic(bic);		
 
 		resp.sendRedirect("/sgp/collaborateurs/lister");
 	}	

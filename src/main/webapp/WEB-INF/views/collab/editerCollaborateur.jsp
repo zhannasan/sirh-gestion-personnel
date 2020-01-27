@@ -1,6 +1,9 @@
 <%@page import="java.util.List"%>
 <%@page import="dev.sgp.entite.Collaborateur"%>
 <%@page language="java" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri = "http://java.sun.com/jsp/jstl/functions" prefix = "fn" %>
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -10,16 +13,14 @@
 	content="width=device-width, initial-scale=1, shrink-tofit=no">
 <!-- Bootstrap CSS -->
 <link rel="stylesheet"
-	href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-	integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
-	crossorigin="anonymous">
-<link rel="stylesheet" type="text/css"	href="<%=request.getContextPath()%>/style.css">
+	href="<c:url value="/bootstrap-4.4.1-dist/css/bootstrap.css"/>">
+<link rel="stylesheet" type="text/css"	href="<c:url value="/style.css"/>">
 <title>SGP - Editer</title>
 </head>
 <body>
 	<header>
 		<nav class="navbar navbar-expand-lg navbar-light bg-light">
-			<a class="navbar-brand" href="#"><img src="LogoFish.svg"
+			<a class="navbar-brand" href="#"><img src="<c:url value="/LogoFish.svg"/>"
 				height="40" width="40"></a>
 			<button class="navbar-toggler" type="button" data-toggle="collapse"
 				data-target="#navbarSupportedContent"
@@ -30,10 +31,10 @@
 
 			<div class="collapse navbar-collapse" id="navbarSupportedContent">
 				<ul class="navbar-nav mr-auto">
-					<li class="nav-item"><a class="nav-link" href="<%=request.getContextPath()%>/collaborateurs/lister">Collaborateurs
+					<li class="nav-item"><a class="nav-link" href="<c:url value="/collaborateurs/lister"/>">Collaborateurs
 							<span class="sr-only">(current)</span>
 					</a></li>
-					<li class="nav-item"><a class="nav-link" href="stats.html">Statistiques</a>
+					<li class="nav-item"><a class="nav-link" href="<c:url value="/collaborateurs/stats"/>">Statistiques</a>
 					</li>
 					<li class="nav-item"><a class="nav-link" href="activites.html">Activités</a>
 					</li>
@@ -44,9 +45,10 @@
 
 	<div class=container-fluid>
 		<form name="editerCollabForm"
-			action="<%=request.getContextPath()%>/collaborateurs/editer"
+			action="<c:url value="/collaborateurs/editer"/>"
 			method="post">
-			<%Collaborateur c = (Collaborateur) request.getAttribute("editCollab"); %>
+			<c:set var="ec" value="${requestScope.editCollab}"/>
+			<c:out value ="${ec.prenom}"/>
 			<div class="row mt-3">
 				<div class="col align-self-start mr-3">
 					<div class="text-right">
@@ -61,12 +63,12 @@
 			<div class="row mt-1">
 				<div
 					class="col-12 col-lg-3 col-md-4 col-sm-4 col-xs-12 offset-1 mt-5">
-					<img src="<%=request.getContextPath()%>/Profile.svg"
+					<img src="<c:url value="/Profile.svg"/>"
 						alt="Profile picture" height="220" width="220">
 				</div>
 				<!--Accordion-->
 				<div class="col-12 col-lg-7 col-md-12 col-sm-12 col-xs-12">
-					<h1><%=c.getNom().toUpperCase()%> <%=c.getPrenom()%> - <%=c.getMatricule()%></h1>
+					<h1><c:out value ="${fn:toUpperCase(ec.nom)}"/> <c:out value ="${ec.prenom}"/> - <c:out value ="${ec.matricule}"/></h1>
 					<div class="accordion" id="accordionEdit">
 						<div class="card">
 							<div class="card-header" id="headingOne">
@@ -100,7 +102,7 @@
 										</div>
 										<div class="col-5">
 											<input type="text" class="form-control" name="nom"
-												id="formCtrlNom" value="<%=c.getNom()%>" readonly>
+												id="formCtrlNom" value="<c:out value ="${ec.nom}"/>"  readonly>
 										</div>
 									</div>
 									<div class="row mt-3">
@@ -109,7 +111,7 @@
 										</div>
 										<div class="col-5">
 											<input type="text" class="form-control" name="prenom"
-												id="formCtrlPrenom" value="<%=c.getPrenom()%>" readonly>
+												id="formCtrlPrenom" value="<c:out value ="${ec.prenom}"/>" readonly>
 										</div>
 									</div>
 									<div class="row mt-3">
@@ -119,7 +121,7 @@
 										</div>
 										<div class="col-5">
 											<input type="date" class="form-control" name="dateNassance"
-												id="formCtrlDate" value="<%=c.getDateNaissance()%>" readonly>
+												id="formCtrlDate" value="<c:out value ="${ec.dateNaissance}"/>" readonly>
 										</div>
 									</div>
 									<div class="row mt-3">
@@ -128,7 +130,7 @@
 										</div>
 										<div class="col-5">
 											<textarea type="text" class="form-control" name="adresse"
-												id="formCtrlAddresse" maxlength="400"><%=c.getAdresse()%></textarea>
+												id="formCtrlAddresse" maxlength="400" required><c:out value ="${ec.adresse}"/></textarea>
 										</div>
 									</div>
 									<div class="row mt-3">
@@ -138,7 +140,7 @@
 										</div>
 										<div class="col-5">
 											<input type="text" class="form-control" name="numeroSecu"
-												id="formCtrlNSS" value="<%=c.getNumeroSecu()%>" readonly>
+												id="formCtrlNSS" value="<c:out value ="${ec.numeroSecu}"/>" readonly>
 										</div>
 									</div>
 									<div class="row mt-3">
@@ -147,7 +149,7 @@
 										</div>
 										<div class="col-5">
 											<input type="text" class="form-control" name="telephone"
-												id="formCtrltel" value="<%=c.getTelephone()%>">
+												id="formCtrltel" value="<c:out value ="${ec.telephone}"/>">
 										</div>
 									</div>
 								</div>
@@ -174,11 +176,10 @@
 											<div class="form-select">
 												<select class="form-control" name="departement"
 													id="formCtrlDept">
-													
-													<option>Comptabilité</option>
-													<option>Ressources Humaines</option>
-													<option>Informatique</option>
-													<option>Administratif</option>
+													<option></option>
+													<c:forEach items="${listeD}" var="d">
+														<option><c:out value="${d.nomDept}"/></option>
+													</c:forEach>
 												</select>
 											</div>
 										</div>
@@ -189,7 +190,7 @@
 										</div>
 										<div class="col-5">
 											<input type="text" class="form-control" name="intitulePoste"
-												id="formCtrlNomPoste" value="<%=c.getIntitulePoste()%>">
+												id="formCtrlNomPoste" value="<c:out value ="${ec.intitulePoste}"/>">
 										</div>
 									</div>
 								</div>
@@ -214,7 +215,7 @@
 										</div>
 										<div class="col-5">
 											<input type="text" class="form-control" name="banque"
-												id="formCtrlBanque" value="<%=c.getBanque()%>">
+												id="formCtrlBanque" value="<c:out value ="${ec.banque}"/>">
 										</div>
 									</div>
 									<div class="row mt-3">
@@ -223,7 +224,7 @@
 										</div>
 										<div class="col-5">
 											<input type="text" class="form-control" name="iban"
-												id="formCtrlIban" value="<%=c.getIban()%>" pattern="[A-Za-z0-9]{14-34}">
+												id="formCtrlIban" value="<c:out value ="${ec.iban}"/>" pattern="[A-Za-z0-9]{14-34}">
 										</div>
 									</div>
 									<div class="row mt-3">
@@ -232,7 +233,7 @@
 										</div>
 										<div class="col-5">
 											<input type="text" class="form-control" name="bic"
-												id="formCtrlBic" value="<%=c.getBic()%>" pattern="[A-Za-z0-9]{8-11}">
+												id="formCtrlBic" value="<c:out value ="${ec.bic}"/>" pattern="[A-Za-z0-9]{8-11}">
 										</div>
 									</div>
 								</div>
@@ -242,12 +243,13 @@
 					<!--Button-->
 					<div class="row mt-3">
 						<div class="col-5 offset-7">
+						<input type="hidden" value="<c:out value="${ec.matricule}"/>" name ="matrcule">
 							<button type="submit" class="btn btn-primary float-right"
 								value="submit" id="btnSave">Sauvegarder</button>
 						</div>
 					</div>
-		</form>
-	</div>
+			</form>
+		</div>
 	</div>
 
 	<!-- Optional JavaScript -->

@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import dev.sgp.entite.Collaborateur;
+import dev.sgp.entite.Departement;
 import dev.sgp.service.CollaborateurService;
 import dev.sgp.service.DepartementService;
 import dev.sgp.util.Constantes;
@@ -20,7 +21,9 @@ public class RechercherCollaborateurController extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		List<Collaborateur> collaborateurs = collabService.listerCollaborateurs();
-		req.setAttribute("listeT", collaborateurs);
+		req.setAttribute("listeC", collaborateurs);
+		List<Departement> departements = deptService.listerDepartement();
+		req.setAttribute("listeD", departements);
 		
 		this.getServletContext().getRequestDispatcher("/WEB-INF/views/collab/rechercherCollaborateurs.jsp").forward(req, resp);
 }
@@ -31,9 +34,7 @@ public class RechercherCollaborateurController extends HttpServlet {
 		String rechNomPrenom = req.getParameter("nomPrenom");
 		String rechDept = req.getParameter("rechDept");
 		List<Collaborateur> collabsTrouve = collabService.rechercherCollaborateurs(rechNomPrenom, rechDept);
-		for(Collaborateur c: collabsTrouve){
-			System.out.println(c.toString());
-		}
+
 		req.setAttribute("listeT", collabsTrouve);
 		
 		resp.sendRedirect("/sgp/collaborateurs/chercher");

@@ -1,6 +1,7 @@
 <%@page import="java.util.List" %>
 <%@page import ="dev.sgp.entite.Collaborateur"%>
 <%@page language="java" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <!DOCTYPE html>
 <html lang="fr">
@@ -10,14 +11,14 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-tofit=
 	no">
 	<!-- Bootstrap CSS -->
-	<link rel="stylesheet" href="<%=request.getContextPath()%>/bootstrap-4.4.1-dist/css/bootstrap.css">
-	<link rel="stylesheet" type="text/css" href="style.css">
+	<link rel="stylesheet" href="<c:url value="/bootstrap-4.4.1-dist/css/bootstrap.css"/>">
+	<link rel="stylesheet" type="text/css" href="<c:url value="/style.css"/>">
 	<title>SGP - Créer</title>
 </head>
 <body>
 	<header>
 		<nav class="navbar navbar-expand-lg navbar-light bg-light">
-			<a class="navbar-brand" href="#"><img src="LogoFish.svg" height="40" width="40"></a>
+			<a class="navbar-brand" href="#"><img src="<c:url value="/LogoFish.svg"/>" height="40" width="40"></a>
 			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 				<span class="navbar-toggler-icon"></span>
 			</button>
@@ -25,10 +26,10 @@
 			<div class="collapse navbar-collapse" id="navbarSupportedContent">
 				<ul class="navbar-nav mr-auto">
 					<li class="nav-item active">
-						<a class="nav-link" href="index.html">Collaborateurs <span class="sr-only">(current)</span></a>
+						<a class="nav-link" href="<c:url value="/collaborateurs/lister"/>">Collaborateurs <span class="sr-only">(current)</span></a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="stats.html">Statistiques</a>
+						<a class="nav-link" href="<c:url value="/collaborateurs/stats"/>">Statistiques</a>
 					</li>
 					<li class="nav-item">
 						<a class="nav-link" href="activites.html">Activités</a>
@@ -44,16 +45,16 @@
 			<h1>Nouveau Collaborateur</h1>
 		</div>
 	</div>
-	<form name="creerCollabForm" id="creerCollabForm" action="<%=request.getContextPath()%>/collaborateurs/creer" method="post">
+	<form name="creerCollabForm" id="creerCollabForm" action="<c:url value="/collaborateurs/creer"/>" method="post">
 		<div class ="row mt-3">
 			<div class="col-3 offset-1">
 				<label class="control-label" for="formCtrlNom">Nom</label>
 			</div>
 			<div class="col-5">
 				<input type="text" class="form-control" name="nom" id="formCtrlNom" required>
-				<%if ((boolean)request.getAttribute("nomError")==true){ %>
-				<span class="error"><small class="form-text text-danger">Le nom est obligatoire</small></span>
-				<%}%>
+				<c:if test="${prenomError=true}">
+				<small><p id="errMsg" class="alert alert-danger hidden">Le nom est obligatoire</p></small>
+				</c:if>
 			</div>
 		</div>
 		<div class ="row mt-3">
@@ -62,7 +63,9 @@
 			</div>
 			<div class="col-5">
 				<input type="text" class="form-control" name="prenom" id="formCtrlPrenom" required>
-
+				<c:if test="${prenomError=true}">
+				<p class="error"><small id="errMsg" class="form-text text-danger hidden">Le prénom est obligatoire</small></p>
+				</c:if>
 			</div>
 		</div>
 		<div class ="row mt-3">
@@ -71,7 +74,9 @@
 			</div>
 			<div class="col-5">
 				<input type="date" class="form-control" name="dateNaissance" id="formCtrlDate" required>
-	
+				<c:if test="${dateNaissanceError=true}">
+				<p class="error"><small id="errMsg" class="form-text text-danger hidden">La date de naissance est obligatoire</small></p>
+				</c:if>
 			</div>
 		</div>
 		<div class ="row mt-3">
@@ -80,7 +85,9 @@
 			</div>
 			<div class="col-5">
 				<textarea type="text" class="form-control" name="adresse" id="formCtrlAdresse" maxlength="400" required></textarea>
-	
+				<c:if test="${adresseError=true}">
+				<span class="error"><small id="errMsg" class="form-text text-danger hidden">L'adresse est obligatoire</small></span>
+				</c:if>
 			</div>
 		</div>
 		<div class ="row mt-3">
@@ -89,7 +96,9 @@
 			</div>
 			<div class="col-5">
 				<input type="text" class="form-control" name="numeroSecu" id="formCtrlNSS" required pattern="[0-9]{15}">
-				
+				<c:if test="${numeroSecuError=true}">
+				<span class="error"><small id="errMsg" class="form-text text-danger hidden">Le numéro de sécurité sociale est obligatoire</small></span>
+				</c:if>
 			</div>
 		</div>
 		<div class="row mt-3">
@@ -121,7 +130,7 @@
 </div>
 <!-- Optional JavaScript -->
 	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
-<script type="text/javascript" src="<%=request.getContextPath()%>/custom.js"></script>
+<script type="text/javascript" src="<c:url value="/custom.js"/>"></script>
 
 	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
 	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"

@@ -1,7 +1,5 @@
 package dev.sgp.service;
 
-import static java.util.stream.Collectors.partitioningBy;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -21,18 +19,22 @@ public class CollaborateurService {
 		listeCollaborateurs.add(collab);
 	}
 
-	public Optional<Collaborateur> rechercherCollaborateur(String matricule) {
-		Optional<Collaborateur> collaborateur = listeCollaborateurs.stream()
-				.filter(c -> c.getMatricule().equals(matricule)).findFirst();
+	public Collaborateur rechercherCollaborateur(String matricule) {
+		Collaborateur collaborateur = listeCollaborateurs.stream()
+				.filter(c -> c.getMatricule().equals(matricule)).findAny().orElse(null);
 		return collaborateur;
 	}
 
-	public List<Collaborateur> rechercherCollaborateurs(String str, String dept) {
+	public List<Collaborateur> rechercherCollaborateurs(String nomPrenom, String dept) {
 		List<Collaborateur> collaborateurs = new ArrayList<>();
-		Predicate<Collaborateur> nomContient = c -> c.getNom().toLowerCase().startsWith(str.toLowerCase());
-		Predicate<Collaborateur> prenomContient = c -> c.getPrenom().toLowerCase().startsWith(str.toLowerCase());		
+		Predicate<Collaborateur> nomContient = c -> c.getNom().toLowerCase().startsWith(nomPrenom.toLowerCase());
+		Predicate<Collaborateur> prenomContient = c -> c.getPrenom().toLowerCase().startsWith(nomPrenom.toLowerCase());		
 		Predicate<Collaborateur> deptContient = c -> c.getDepartement().equals(dept);
-		if(dept.equals("Tous")){
+		if(nomPrenom.trim().equals("") && dept.equals("Tous")){
+			collaborateurs = listeCollaborateurs;
+		}else if(nomPrenom.trim().equals("")){
+			collaborateurs = listeCollaborateurs.stream().filter(deptContient).collect(Collectors.toList());
+		}else if(dept.equals("Tous")){
 			collaborateurs=	listeCollaborateurs.stream()
 					.filter(nomContient.or(prenomContient)).collect(Collectors.toList());
 		}else{

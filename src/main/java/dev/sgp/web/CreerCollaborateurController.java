@@ -58,12 +58,14 @@ public class CreerCollaborateurController extends HttpServlet {
 				nullParams.add(key);
 				System.out.println(key + "Error");
 			}
+			req.setAttribute(key + "Error", false);
 			req.setAttribute(key, value);
 		}
 
 		String nom = "", prenom = "", adresse = "", numeroSecu = "";
 		LocalDate dateNaissance = LocalDate.now();
 		if (nullParams.isEmpty()) {
+			resp.setStatus(201);
 			for (Entry<String, String> entry : params.entrySet()) {
 				if (entry.getKey().equals("nom")) {
 					nom = entry.getValue();
@@ -101,7 +103,7 @@ public class CreerCollaborateurController extends HttpServlet {
 		collab.setBic("");
 		collab.setIban("");
 		// add to list
-		req.getSession().setAttribute("matricule", matricule);
+		//req.getSession().setAttribute("matricule", matricule);
 		collabService.sauvegarderCollaborateur(collab);
 
 		resp.sendRedirect("/sgp/collaborateurs/lister");
